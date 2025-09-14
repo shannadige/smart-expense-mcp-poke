@@ -204,12 +204,18 @@ init_database()
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     host = "0.0.0.0"
-    
-    print(f"Starting FastMCP server on {host}:{port}")
-    
-    mcp.run(
-        transport="http",
-        host=host,
-        port=port,
-        stateless_http=True
-    )
+
+    print(f"Starting Smart Expense Tracker MCP server on {host}:{port}")
+    print(f"Environment: {os.environ.get('ENVIRONMENT', 'development')}")
+    print(f"Database initialized: {os.path.exists(DB_PATH)}")
+
+    try:
+        mcp.run(
+            transport="http",
+            host=host,
+            port=port,
+            stateless_http=True
+        )
+    except Exception as e:
+        print(f"Failed to start server: {e}")
+        raise
